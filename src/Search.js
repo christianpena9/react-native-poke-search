@@ -2,11 +2,16 @@ import React, {Component} from 'react';
 import {View,Text} from 'react-native';
 import {Header,Item,Icon,Input,Button} from 'native-base';
 
+/* Custom components below */
+import PokeLoader from './PokeLoader';
+import SearchBody from './SearchBody';
+
 class Search extends Component {
     constructor(props,context) {
         super(props, context);
         this.state = {
-            pokeSearch: ''
+            pokeSearch: '',
+            onCall: true
         }
     }
     
@@ -14,9 +19,21 @@ class Search extends Component {
         
     }
     
+    renderBody = () => {
+        if(this.state.onCall) {
+            return (
+                <PokeLoader />
+            );
+        } else {
+            return (
+                <SearchBody />
+            );
+        }
+    }
+    
     render() {
         return (
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, backgroundColor: 'white'}}>
                 <Header
                     searchBar={true}
                     rounded={true}
@@ -33,6 +50,7 @@ class Search extends Component {
                         />
                     </Item>
                 </Header>
+                {this.renderBody()}
             </View>
         );
     }
